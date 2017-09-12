@@ -1,0 +1,549 @@
+%
+% File:   mypsfig2.sty
+% Date:   24-Oct-96
+% Author: I. Chuang <ike@isl.stanford.edu>
+%
+% My modified version of psfig.sty for Latex
+%
+% Modifications: (1) uses dvips \special format, (2) additional scale= argument
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% psfigTeX macros
+%
+% All software, documentation, and related files in this distribution of
+% psfig/tex are Copyright (c) 1987 Trevor J. Darrell
+%
+% Permission is granted for use and non-profit distribution of psfig/tex 
+% providing that this notice be clearly maintained, but the right to
+% distribute any portion of psfig/tex for profit or as part of any commercial
+% product is specifically reserved for the author.
+%
+%
+% $Header: psfig.tex,v 1.7 87/01/19 15:55:27 trevor Exp $
+% /wheaties/src1/tex/Distrib-2.0/tex82-2.0/TeXcontrib/psfigtex/src/psfig.tex.dvi2ps
+% 
+% Modifications for dvi2ps (at *.ai.mit.edu) by CarlManning (crm,caroma)
+% Note:  dvi2ps only supports the special psfile command, and does not
+% support global definitions (e.g. a file of definitions used by mac pictures)
+% nor prolog files (a file loaded just before a picture, again to
+% introduce definitions used by the picture).  If you need such
+% definitions (e.g. mac.pro), insert them directly into the postscript file
+% after the header comments.
+% Note:  dvi2ps only supports clipping of a rectangle whose lower left
+% corner is located at 0,0, so general clipping cannot be supported.
+%
+%
+% Usage:  \psfig{file=, height=, width=, bbllx=, bblly=, bburx=, bbury=,
+%			rheight=, rwidth=, clip=, scale=}
+%
+% Figure at natural size: 	\psfig{file=mypic.ps}
+% Figure scaled to fit height:	\psfig{file=mypic.ps,height=2 in}
+% Figure scaled to fit width:	\psfig{file=mypic.ps,width=\textwidth}
+% Figure scaled proportionally:	\psfig{file=mypic.ps,scale=75}
+% 
+% For more info and explanation of other options, see
+% /wheaties/src1/tex/Distrib-2.0/tex82-2.0/TeXcontrib/psfigtex/doc/figdoc.tex
+
+% 10-Mar-92
+% if using dvips then be careful! the {v,h}scale cmds in the special
+% are in percentages!!!! not absolute numbers!
+
+\newif\ifdvips
+\dvipstrue
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% info
+
+\typeout{********** mypsfig.tex version 10-May-92 I. Chuang}
+\ifdvips\typeout{**********    (\special set for DVIPS, *NOT* dvi2ps) **********}\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\catcode`\@=11\relax
+% not used.
+% \def\@psFigTeXPrologFile{figtex.pro}
+
+\def\typeout#1{\message{#1}}
+% old def below was from LaTeX -crm
+% \newwrite\@unused
+% \def\typeout#1{{\let\protect\string\immediate\write\@unused{#1}}}
+
+% psglobal instructs dvi->ps converter to load a file of global definitions -crm
+% \def\psglobal#1{
+%   \typeout{(psfig: #1)}
+%   \immediate\special{ps:plotfile #1 global}}
+
+% Psfiginit: may load file at beginning; unfortunately for big jobs
+% some dvi->ps converters may save arbitrary levels to manage (font)
+% memory, so it may be impossible have this load define things at the
+% right level.  Therefore, safest thing is to reload it for every 
+% figure.  --crm
+% \newif\if@ReloadPsFigTeXProlog
+% \def\psfiginit{
+%   %\@ReloadPsFigTeXPrologtrue
+%   \@ReloadPsFigTeXPrologfalse
+%   \immediate\psglobal{\@psFigTeXPrologFile}
+% }
+
+%
+% @psdo control structure -- similar to Latex @for.
+% I redefined these with different names so that psfig can
+% be used with TeX as well as LaTeX, and so that it will not 
+% be vunerable to future changes in LaTeX's internal
+% control structure.
+%
+\def\@nnil{\@nil}
+\def\@empty{}
+\def\@psdonoop#1\@@#2#3{}
+\def\@psdo#1:=#2\do#3{\edef\@psdotmp{#2}\ifx\@psdotmp\@empty \else
+    \expandafter\@psdoloop#2,\@nil,\@nil\@@#1{#3}\fi}
+\def\@psdoloop#1,#2,#3\@@#4#5{\def#4{#1}\ifx #4\@nnil \else
+       #5\def#4{#2}\ifx #4\@nnil \else#5\@ipsdoloop #3\@@#4{#5}\fi\fi}
+\def\@ipsdoloop#1,#2\@@#3#4{\def#3{#1}\ifx #3\@nnil 
+       \let\@nextwhile=\@psdonoop \else
+      #4\relax\let\@nextwhile=\@ipsdoloop\fi\@nextwhile#2\@@#3{#4}}
+\def\@tpsdo#1:=#2\do#3{\xdef\@psdotmp{#2}\ifx\@psdotmp\@empty \else
+    \@tpsdoloop#2\@nil\@nil\@@#1{#3}\fi}
+\def\@tpsdoloop#1#2\@@#3#4{\def#3{#1}\ifx #3\@nnil 
+       \let\@nextwhile=\@psdonoop \else
+      #4\relax\let\@nextwhile=\@tpsdoloop\fi\@nextwhile#2\@@#3{#4}}
+% 
+%
+\def\psdraft{
+	\def\@psdraft{0}
+	%\typeout{draft level now is \@psdraft \space . }
+}
+\def\psfull{
+	\def\@psdraft{100}
+	%\typeout{draft level now is \@psdraft \space . }
+}
+\psfull
+\newif\if@prologfile
+\newif\if@postlogfile
+%%% These are for the option list.
+%%% A specification of the form a = b maps to calling \@p@@sa{b}
+\newif\if@bbllx
+\newif\if@bblly
+\newif\if@bburx
+\newif\if@bbury
+\newif\if@height
+\newif\if@width
+\newif\if@rheight
+\newif\if@rwidth
+\newif\if@clip
+\newif\if@scale					% new 24oct96
+\def\@p@@sclip#1{\@cliptrue}
+\def\@p@@sfile#1{%\typeout{file is #1}
+		   \def\@p@sfile{#1}
+}
+\def\@p@@sfigure#1{\def\@p@sfile{#1}}
+\def\@p@@sbbllx#1{
+		%\typeout{bbllx is #1}
+		\@bbllxtrue
+		\dimen100=#1
+		\edef\@p@sbbllx{\number\dimen100}
+}
+\def\@p@@sbblly#1{
+		%\typeout{bblly is #1}
+		\@bbllytrue
+		\dimen100=#1
+		\edef\@p@sbblly{\number\dimen100}
+}
+\def\@p@@sbburx#1{
+		%\typeout{bburx is #1}
+		\@bburxtrue
+		\dimen100=#1
+		\edef\@p@sbburx{\number\dimen100}
+}
+\def\@p@@sbbury#1{
+		%\typeout{bbury is #1}
+		\@bburytrue
+		\dimen100=#1
+		\edef\@p@sbbury{\number\dimen100}
+}
+\def\@p@@sheight#1{
+		\@heighttrue
+		\dimen100=#1
+   		\edef\@p@sheight{\number\dimen100}
+		%\typeout{Height is \@p@sheight}
+}
+\def\@p@@swidth#1{
+		%\typeout{Width is #1}
+		\@widthtrue
+		\dimen100=#1
+		\edef\@p@swidth{\number\dimen100}
+}
+\def\@p@@srheight#1{
+		%\typeout{Reserved height is #1}
+		\@rheighttrue
+		\dimen100=#1
+		\edef\@p@srheight{\number\dimen100}
+}
+\def\@p@@srwidth#1{
+		%\typeout{Reserved width is #1}
+		\@rwidthtrue
+		\dimen100=#1
+		\edef\@p@srwidth{\number\dimen100}
+}
+\def\@p@@sscale#1{					% new 24oct96
+		%\typeout{Scale is #1}
+		\@scaletrue
+		\edef\@p@sscale{#1}
+}
+\def\@p@@sprolog#1{\@prologfiletrue\def\@prologfileval{#1}}
+\def\@p@@spostlog#1{\@postlogfiletrue\def\@postlogfileval{#1}}
+\def\@cs@name#1{\csname #1\endcsname}
+\def\@setparms#1=#2,{\@cs@name{@p@@s#1}{#2}}
+%
+% initialize the defaults (size the size of the figure)
+%
+\def\ps@init@parms{
+		\@bbllxfalse \@bbllyfalse
+		\@bburxfalse \@bburyfalse
+		\@heightfalse \@widthfalse
+		\@rheightfalse \@rwidthfalse
+		\def\@p@sbbllx{}\def\@p@sbblly{}
+		\def\@p@sbburx{}\def\@p@sbbury{}
+		\def\@p@sheight{}\def\@p@swidth{}
+		\def\@p@srheight{}\def\@p@srwidth{}
+		\def\@p@sfile{}
+		\def\@p@scost{10}
+		\def\@p@sscale{}		% new 24oct96
+		\def\@sc{}
+                \@prologfilefalse
+		\@postlogfilefalse
+		\@clipfalse
+}
+%
+% Go through the options setting things up.
+%
+\def\parse@ps@parms#1{
+	 	\@psdo\@psfiga:=#1\do
+		   {\expandafter\@setparms\@psfiga,}}
+%
+% Compute bb height and width
+%
+\newif\ifno@bb
+\newif\ifnot@eof
+\newread\ps@stream
+\def\bb@missing{
+	\openin\ps@stream=\@p@sfile
+        \no@bbtrue
+        \ifeof\ps@stream
+          \typeout{WARNING:  FILE NOT FOUND...}
+        \else
+	  \not@eoftrue
+          % set up for reading postscript file -crm
+          \begingroup
+	    \catcode`\%=12  \catcode`\:=12
+            \catcode`\^^M=5 \catcode`\ =10
+	    \typeout{searching for bounding box...}
+	    \loop
+		\read\ps@stream to \line@in
+		\global\toks200=\expandafter{\line@in}
+		\ifeof\ps@stream \not@eoffalse \fi
+                % \typeout{ looking at :: \the\toks200 }
+		\@bbtest{\toks200}
+		\if@bbmatch\not@eoffalse\expandafter\bb@cull\the\toks200\fi
+	    \ifnot@eof \repeat
+          \endgroup
+          \ifno@bb
+            \typeout{WARNING:  No BoundingBox supplied or found...}
+          \fi
+        \fi
+}	
+\catcode`\%=12
+\newif\if@bbmatch
+\def\@bbtest#1{\expandafter\@a@\the#1%%BoundingBox:\@bbtest\@a@}
+\long\def\@a@#1%%BoundingBox:#2#3\@a@{\ifx\@bbtest#2\@bbmatchfalse\else\@bbmatchtrue\fi}
+\long\def\bb@cull#1 #2 #3 #4 #5 {
+	\dimen100=#2 bp\xdef\@p@sbbllx{\number\dimen100}
+	\dimen100=#3 bp\xdef\@p@sbblly{\number\dimen100}
+	\dimen100=#4 bp\xdef\@p@sbburx{\number\dimen100}
+	\dimen100=#5 bp\xdef\@p@sbbury{\number\dimen100}
+	\global\no@bbfalse
+}
+\catcode`\%=14
+\def\compute@bb{
+		\no@bbfalse
+		\if@bbllx \else \no@bbtrue \fi
+		\if@bblly \else \no@bbtrue \fi
+		\if@bburx \else \no@bbtrue \fi
+		\if@bbury \else \no@bbtrue \fi
+		\ifno@bb \bb@missing \fi
+		\ifno@bb
+                \else
+		  \count203=\@p@sbburx
+		  \count204=\@p@sbbury
+		  \advance\count203 by -\@p@sbbllx
+		  \advance\count204 by -\@p@sbblly
+		  \edef\@bbw{\number\count203}
+		  \edef\@bbh{\number\count204}
+		  %\typeout{ bbh = \@bbh, bbw = \@bbw }
+                \fi
+}
+%
+% \in@hundreds performs #1 * (#2 / #3) correct to the hundreds,
+%	then leaves the result in @result
+%
+\def\in@hundreds#1#2#3{\count240=#2 \count241=#3
+		     \count100=\count240	% 100 is first digit #2/#3
+		     \divide\count100 by \count241
+		     \count101=\count100
+		     \multiply\count101 by \count241
+		     \advance\count240 by -\count101
+		     \multiply\count240 by 10
+		     \count101=\count240	%101 is second digit of #2/#3
+		     \divide\count101 by \count241
+		     \count102=\count101
+		     \multiply\count102 by \count241
+		     \advance\count240 by -\count102
+		     \multiply\count240 by 10
+		     \count102=\count240	% 102 is the third digit
+		     \divide\count102 by \count241
+		     \count200=#1\count205=0
+		     \count201=\count200
+			\multiply\count201 by \count100
+		 	\advance\count205 by \count201
+		     \count201=\count200
+			\divide\count201 by 10
+			\multiply\count201 by \count101
+			\advance\count205 by \count201
+			%
+		     \count201=\count200
+			\divide\count201 by 100
+			\multiply\count201 by \count102
+			\advance\count205 by \count201
+			%
+		     \edef\@result{\number\count205}
+}
+\def\compute@wfromh{
+		% computing : width = height * (bbw / bbh)
+		\in@hundreds{\@p@sheight}{\@bbw}{\@bbh}
+		%\typeout{ \@p@sheight * \@bbw / \@bbh, = \@result }
+		\edef\@p@swidth{\@result}
+		%\typeout{w from h: width is \@p@swidth}
+}
+\def\compute@hfromw{
+		% computing : height = width * (bbh / bbw)
+		\in@hundreds{\@p@swidth}{\@bbh}{\@bbw}
+		%\typeout{ \@p@swidth * \@bbh / \@bbw = \@result }
+		\edef\@p@sheight{\@result}
+		%\typeout{h from w : height is \@p@sheight}
+}
+\def\compute@fromscale{		% new 24oct96
+		% computing : height = scale * (bbh / 100)
+		\in@hundreds{\@p@sscale}{\@bbh}{100}
+		%\typeout{ \@p@sscale * \@bbh / 100 = \@result }
+		\edef\@p@sheight{\@result}
+		% computing : width = scale * (bbw / 100)
+		\in@hundreds{\@p@sscale}{\@bbw}{100}
+		%\typeout{ \@p@sscale * \@bbw / 100 = \@result }
+		\edef\@p@swidth{\@result}
+}
+\def\compute@handw{
+		\if@height 
+			\if@width
+			\else
+				\compute@wfromh
+			\fi
+		\else 
+			\if@width
+				\compute@hfromw
+			\else
+				\if@scale	% new 24oct96		
+					\compute@fromscale
+				\else
+					\edef\@p@sheight{\@bbh}
+					\edef\@p@swidth{\@bbw}
+				\fi
+			\fi
+		\fi
+}
+\def\compute@resv{
+		\if@rheight \else \edef\@p@srheight{\@p@sheight} \fi
+		\if@rwidth \else \edef\@p@srwidth{\@p@swidth} \fi
+}
+%		
+% Compute any missing values
+\def\compute@sizes{
+	\compute@bb
+        \ifno@bb
+        \else
+	  \compute@handw
+	  \compute@resv
+        \fi
+}
+
+\def\@fixedpointdecimal#1#2#3#4#5#6{#2#3#4.#5#6}
+
+\def\psfig#1{\vbox {%
+	% do a zero width hard space so that a single
+	% \psfig in a centering enviornment will behave nicely
+	%{\setbox0=\hbox{\ }\ \hskip-\wd0}
+	%
+	\ps@init@parms
+	\parse@ps@parms{#1}
+        \typeout{(psfig: \@p@sfile ...}
+	\compute@sizes
+	%
+        \ifno@bb
+                \typeout{skipping...}
+	\else\ifnum\@p@scost<\@psdraft{%
+		\typeout{including...}
+                % calculate using in@hundreds;
+                % result def is in \@result and num in \count205
+		\in@hundreds{100}{\@p@sheight}{\@bbh}
+		\ifdvips\multiply\count205 by 100\fi
+		\advance\count205 by 100000
+                \edef\@vscale{\expandafter\@fixedpointdecimal\number\count205}
+                \in@hundreds{100}{\@p@swidth}{\@bbw}
+		\ifdvips\multiply\count205 by 100\fi
+                \advance\count205 by 100000
+                \edef\@hscale{\expandafter\@fixedpointdecimal\number\count205}
+
+		\typeout{vscale=\@vscale, hscale=\@hscale}
+%%		\ifdvips\typeout{hello}\fi
+
+                % Scale offset, and then convert units from scaled points to
+                % points (approximate Postscript points).  Offset point
+                % is upper left, so we can vbox below it or not to get overlays.
+                % Note: There are 65536 scaled points per point.
+                \in@hundreds{\@p@sbbury}{-\@p@sheight}{\@bbh}
+                \divide\count205 by 65536   
+                \edef\@voffset{\number\count205}
+                \in@hundreds{\@p@sbbllx}{-\@p@swidth}{\@bbw}
+                \divide\count205 by 65536
+                \edef\@hoffset{\number\count205}
+                %
+                \if@clip
+                        % This is untested; it might work on figures
+                        % where (bblx,bbly) = (0,0) [see note at top].
+                        \typeout{clipping (UNSUPPORTED)...}
+                        \count205=\@p@sheight
+                        \divide\count205 by 65536
+                        \edef\@vsize{\number\count205}
+                        \count205=\@p@swidth
+                        \divide\count205 by 65536
+                        \edef\@hsize{\number\count205}
+                        %
+                        \special{psfile=\@p@sfile \space
+                                 vsize=\@vsize \space
+                                 hsize=\@hsize \space
+                                 voffset=\@voffset \space
+                                 hoffset=\@hoffset \space
+                                 vscale=\@vscale \space
+                                 hscale=\@hscale}
+                \else
+                        \special{psfile=\@p@sfile \space
+                                 voffset=\@voffset \space
+                                 hoffset=\@hoffset \space
+                                 vscale=\@vscale \space
+                                 hscale=\@hscale}
+                \fi
+		% Create the vbox to reserve the space for the figure
+		\vbox to \@p@srheight true sp{
+			\hbox to \@p@srwidth true sp{
+				\hfil
+			}
+                        \vfil
+		}
+	}\else{
+		% draft figure, just reserve the space and print the
+		% path name.
+                \typeout{not including in draft...}
+                \fbox{\vbox to \@p@srheight true sp{
+		\vss
+			\hbox to \@p@srwidth true sp{
+				\hss
+				{\tt\@p@sfile}
+				\hss
+			}
+		\vss
+		}}
+	}\fi\fi
+        \typeout{)}
+}}
+
+% Here's another version which uses the original prolog postscript
+% definitions.  It doesn't work with dvi2ps, but if you are developing
+% your own dvi->ps converter with the ability to insert raw postscript
+% code, you can use this to get at all the capabilities of psfig.
+% I've added comments to explain what the specials are. -crm
+%
+% \psfig
+% usage : \psfig{file=, height=, width=, bbllx=, bblly=, bburx=, bbury=,
+%			rheight=, rwidth=, clip=}
+%
+% "clip=" is a switch and takes no value, but the `=' must be preset.
+% \def\psfigure#1{\vbox {%
+% 	% do a zero width hard space so that a single
+% 	% \psfig in a centering enviornment will behave nicely
+% 	%{\setbox0=\hbox{\ }\ \hskip-\wd0}
+% 	%
+% 	\ps@init@parms
+% 	\parse@ps@parms{#1}
+%         \typeout{(psfig: \@p@sfile ...}
+% 	\compute@sizes
+% 	%
+% 	\ifnum\@p@scost<\@psdraft{%
+% 		\typeout{including...}
+%                 % \special{psrawstart} should ready dvi->ps converter
+%                 %    for some raw postscript code.  This may entail
+%                 %    emitting postscript code to update the cursor
+%                 %    position and perhaps flushing buffers.
+%                 % \special{psraw ...} inserts the raw postscript code
+%                 %    into the output.
+%                 % \special{psrawfile ...} inserts the raw postscript
+%                 %    into the output.
+%                 % \special{psrawend} instructs the dvi->ps converter
+%                 %    to clean up after this raw insertion, perhaps
+%                 %    flushing special buffers.                          --crm
+%                 \special{psrawstart}
+%                 % Reload prolog if not in file prolog; it defines 
+%                 % the Postscript StartTexFig command. --crm
+%                 \if@ReloadPsFigTeXProlog
+%                         \special{psrawfile \@psFigTeXPrologFile} \fi
+% 		\special{psraw 	\@p@swidth \space \@p@sheight \space
+% 				\@p@sbbllx \space \@p@sbblly \space
+% 				\@p@sbburx \space \@p@sbbury \space
+% 				startTexFig \space }
+% 		\if@clip{
+% 			\typeout{clipping...}
+% 			\special{psraw \@p@sbbllx \space \@p@sbblly \space
+% 				\@p@sbburx \space \@p@sbbury \space
+% 				doclip \space }
+% 		}\fi
+% 		\if@prologfile
+% 		    \special{psrawfile \@prologfileval \space } \fi
+% 		\special{psrawfile \@p@sfile \space }
+% 		\if@postlogfile
+% 		    \special{psrawfile \@postlogfileval \space } \fi
+% 		\special{psraw endTexFig \space }
+%                 \special{psrawend}
+% 		% Create the vbox to reserve the space for the figure
+% 		\vbox to \@p@srheight true sp{
+% 			\hbox to \@p@srwidth true sp{
+% 				\hfil
+% 			}
+% 		\vfil
+% 		}
+% 	}\else{
+%                 \typeout{not including...}
+% 		% draft figure, just reserve the space and print the
+% 		% path name.
+% 		\vbox to \@p@srheight true sp{
+% 		\vss
+% 			\hbox to \@p@srwidth true sp{
+% 				\hss
+% 				\@p@sfile
+% 				\hss
+% 			}
+% 		\vss
+% 		}
+% 	}\fi
+%         \typeout{)}
+% }}
+
+\catcode`\@=12\relax

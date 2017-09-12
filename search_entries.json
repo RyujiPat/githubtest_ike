@@ -1,0 +1,80 @@
+[
+    {
+        "content": "", 
+        "path": "Chapter", 
+        "url_name": "unit1", 
+        "title": "Unit 1: Quantum and classical computing fundamentals"
+    }, 
+    {
+        "content": "", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals] Section", 
+        "url_name": "Lectures_U1_1_History_and_development_of_quantum_computation", 
+        "title": "Lectures U1.1: History and development of quantum computation"
+    }, 
+    {
+        "content": null, 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Video", 
+        "url_name": "U1L1a", 
+        "title": "Course topics for the semester"
+    }, 
+    {
+        "content": null, 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Video", 
+        "url_name": "U1L1b", 
+        "title": "Models for classical computation"
+    }, 
+    {
+        "content": null, 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Video", 
+        "url_name": "U1L1c", 
+        "title": "History of quantum mechanics and quantum computation"
+    }, 
+    {
+        "content": null, 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Video", 
+        "url_name": "U1L1d", 
+        "title": "Computation must be robust against noise"
+    }, 
+    {
+        "content": "This is a concept question, provided to double-check your understanding of the\nprevious video clip.\n\nIn lecture, Prof. Shor introduced the topic of universality, and described how\nsome models of classical computation which are universal, and other models are\nnot.\n\nThe circuit model of classical computation may be defined as the family of\nelectrical circuits composed from AND gates and NOT gates.\n\nCheck all the following which are true for the circuit model:\n\nCircuits are universal for classical computation Circuits are NOT a universal\nmodel for classical computation Circuits can describe computations which are\nbeyond what a Turing machine can do Circuits can simulate Turing machines\n\n", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Problem", 
+        "url_name": "u1-1-cq-universality", 
+        "title": "Universality of classical circuits"
+    }, 
+    {
+        "content": "This is a concept question, provided to double-check your understanding of the\nprevious video clip.\n\nAs described by Prof. Shor in the last lecture video clip, in 1982, Nick\nHerbert published a paper proposing\nFLASH , \"First Laser-\nAmplified Superluminal Hookup,\" offering a means to communicate faster than\nthe speed of light, using quantum entanglement.\n\nWhat was the flaw in Herbert's proposal?\n\nEntangled states have too short of a lifetime to allow superluminal\ncommunication Entangled photons are states of light which cannot travel faster\nthan the speed of light Quantum entanglement involves hidden variables, which\nobfuscate any superluminal communication Unknown quantum states cannot be\ncopied\n\n", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Problem", 
+        "url_name": "u1-1-cq-qm-flash", 
+        "title": "Faster-than-light communication with entanglement?"
+    }, 
+    {
+        "content": "This is a concept question, provided to double-check your understanding of the\nprevious video clip.\n\nWhich of the following are mechanisms for fault-tolerance, as used in\nclassical computing? Check all which apply:\n\nMassive redundancy Checkpointing Code rewriting Error correction\n\n", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/Lectures U1.1: History and development of quantum computation] Problem", 
+        "url_name": "problem_u1-1-cq-qm-flash", 
+        "title": "Mechanisms for fault-tolerance"
+    }, 
+    {
+        "content": "", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals] Section", 
+        "url_name": "PS_1_Part_A_-_Reversible_Circuits", 
+        "title": "PS#1 Part A - Reversible Circuits"
+    }, 
+    {
+        "content": "Design a reversible circuit, using NOT, CNOT, Toffoli, and Fredkin gates,\nwhich acts on the four inputs , to\nperform the operation \nwhich swaps  and\n if , and\nswaps  and  if\n. Bit \nshould be left unchanged.\n\nNote that you have 20 attempts, so you have some leeway with syntax mistakes.\nMost later problems will just provide 10. Work out your circuits in your own\nnotebook and check carefully before entering; do not rely on random\nexploration to get the correct answer.\n\n**Solution:**\n\nOne correct solution is:\n\n    \n    \n    fredkin(a,c,d)\n    not(a)\n    fredkin(a,b,d)\n    not(a)\n    \n\n![](/static/images/ps1a_swap243_circuit.png)\n\n[](/course/jump_to_id)\n\n", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/PS#1 Part A - Reversible Circuits] Problem", 
+        "url_name": "u1_1_four_input_cswap", 
+        "title": "Reversible two-four-three swap"
+    }, 
+    {
+        "content": "Design a reversible circuit, using NOT, CNOT, Toffoli, and Fredkin gates,\nwhich acts on the four inputs , to\nswap  and \nonly when both  and\n. You may use a fourth bit\n, given as initialized to\n, in your circuit.\n\n**Solution:**\n\nOne correct solution is:\n\n    \n    \n    fredkin(a,b,e)\n    fredkin(e,c,d)\n    fredkin(a,b,e)\n    \n\n![](/static/images/ps1a_ccswap_circuit.png)\n\n[](/course/jump_to_id)\n\n", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/PS#1 Part A - Reversible Circuits] Problem", 
+        "url_name": "u1_1_ccswap", 
+        "title": "Controlled-controlled swap"
+    }, 
+    {
+        "content": "Design a reversible circuit, using NOT, CNOT, Toffoli, and Fredkin gates,\nwhich acts on the two arbitrary inputs ,\nand the two fixed inputs ,\n, to produce four bits\n, ,\n,  of\noutput, where only the  output is\n (the others are all\n), and .\n\nThis is a two-input demultiplexer, and the output is a unary encoded value,\nsometimes otherwise known as \"one-hot encoding\" in the field of deep neural\nnetworks.\n\n#### Hint\n\nDenoting the NOT of  as\n, note that\n\n\n\n\n\n\n\n\n\n(1.1)\n\n\n\n\n\n\n\n\n\n(1.2)\n\n\n\n\n\n\n\n\n\n(1.3)\n\n\n\n\n\n\n\n\n\n(1.4)\n\nSince these are all Boolean functions of the input, it would seem immediate\nhow to compute these using Boolean logic functions. The trick here is that\nyou're being asked to construct the circuit using reversible gates, consuming\nno additional inputs, and producing no extra garbage. This is known as an \"in-\nplace\" reversible circuit.\n\nYou should be able to do this using 11 gates. If you can do it with fewer, let\nthe TA know!\n\n[Show](javascript: {return false;})\n\n**Solution:**\n\nA reasonable solution is:\n\n    \n    \n    \t\ttoffoli(a,b,d)\n    \t\tnot(a)\n                    toffoli(a,b,c)\n                    not(a)\n                    cnot(d,b)\n                    cnot(c,b)\n                    not(d)\n                    toffoli(a,d,b)\n                    not(d)\n                    not(a)\n                    cnot(c,a)\n    \n\n![](/static/images/ps1a_demux2_circuit.png)\n\n[](/course/jump_to_id)\n\n", 
+        "path": "[Unit 1: Quantum and classical computing fundamentals/PS#1 Part A - Reversible Circuits] Problem", 
+        "url_name": "u1_1_demux2", 
+        "title": "Reversible two-input demultiplexer"
+    }
+]

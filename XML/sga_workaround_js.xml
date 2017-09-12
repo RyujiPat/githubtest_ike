@@ -1,0 +1,22 @@
+<script type="text/javascript">
+console.log("hello sga");
+
+// fix the grade submission element
+button = $('#grade-submissions-button');
+x = $("[id='"+button.attr('href').substring(1)+"']");
+id = x.attr('id');
+newid = id.replace(/\./g,'_')
+x.attr('id',newid)
+button.attr('href', '#'+newid);
+console.log(id);
+
+// now fix the enter-grade element
+y = $('.grade-modal')
+yid = y.attr('id')
+newyid = yid.replace(/\./g,'_')
+y.attr('id', newyid)
+
+template = $('#sga-grading-tmpl').html();
+template = template.replace(yid, newyid);
+$('#sga-grading-tmpl').html(template);
+</script>

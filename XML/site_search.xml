@@ -1,0 +1,137 @@
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+  <script type="text/javascript" src="/static/js_lunr.min.js"/>
+  <a href="/static/NONE" id="dummy_course_link" style="display:none"/>
+  <a href="/course/jump_to_id/NONE" id="dummy_jump_link" style="display:none"/>
+  <section class="search">
+    <!--<h1>Search</h1> -->
+    <input size="60" type="search" autofocus="" class="search-field">
+      <img src="/static/images_search_glass.png"/>
+    </input>
+    <div class="search-results"/>
+  </section>
+  <script type="text/javascript">
+
+  course_static_url = $('#dummy_course_link').attr('href').replace('/NONE', '');
+  jump_to_url = $('#dummy_jump_link').attr('href').replace('/NONE', '');
+
+  // searchIndexUrl = course_static_url + "/searchIndex.json";
+
+  searchIndexUrl = course_static_url + "/searchIndex.js";
+
+search_data_loaded = false;
+search_started = false;
+
+jQuery(function($) {
+    var index,
+        store,
+        data = $.getJSON(searchIndexUrl);
+
+    data.then(function(data){
+        store = data.store,
+        // create index
+        index = lunr.Index.load(data.index)
+	search_data_loaded = true;
+    });
+
+    var lb = String.fromCharCode(60);
+    var rb = String.fromCharCode(62);
+    var amp = String.fromCharCode(38);
+
+    var mke = function(x){ return lb + x + rb; }
+    var do_logger_handle;
+    var query_to_log;
+
+    var queue_query_log = function(query){
+	if (do_logger_handle){			// log only if quiet
+	    clearTimeout(do_logger_handle);
+	}
+	query_to_log = query;
+	do_logger_handle = setTimeout(do_query_log, 400);
+    }
+
+    var do_query_log = function(){
+        try { Logger.log("site_search", {'query': query_to_log});   }
+        catch (error){ console.log("error! ", error);  }
+    }
+
+    $('.search-field').keyup(function() {
+        var query = $(this).val();
+	// console.log('query = ', query);
+        if(query === ''){
+            jQuery('.search-results').empty();
+        }
+        else {
+            // perform search
+	    search_started = true;
+	    // log query
+	    queue_query_log(query)
+	    // do search
+            var results = index.search(query);
+	    $('.search-results').show();
+	    // $('.search-results').append("hello world");
+	    // console.log('results = ', results);
+            data.then(function(data) {
+            // (function() {
+		if (results.length){
+		    $('.search-results').show();
+		    $('.search-results').empty();
+		    var the_list  = $(mke('ul'));
+                    results.map(function(result){
+			var title = store[result.ref].title;
+			var sdat = store[result.ref];
+			// console.log("result ref=", result.ref, " title=", title);
+			var link = $(mke('a'))
+                                .attr('href', jump_to_url + '/' + result.ref)
+                                .text(sdat.title);
+                        var el = $(mke('li'))
+                                .append(link)
+			        .append(amp+"nbsp; ")
+			        .append($(lb+"font color='grey'"+rb+ result.score.toFixed(3) + lb + "/font" + rb))
+				.append(mke('br/'))
+				.append($(lb+"font color='orange' size='-1'"+rb+ sdat.path + lb + "/font" + rb)
+                            );
+                        // if(store[result.ref].abstract){
+                        //    el.after($(lb + 'p' + rb).text(store[result.ref].abstract));
+                        // }
+			// console.log("el = ", el);
+                        the_list.append(el);
+		    });
+                    $('.search-results').append(the_list)
+		}else{
+                    $('.search-results').empty().append($(mke('p') + 'No results found' + mke('/p')));
+                }
+            }); 
+            // })(); 
+        }
+    }); 
+
+});
+
+if (window.location.search){
+    var sterm = window.location.search.split('=')[1];
+    $('.search-field').val(sterm);
+
+    var do_search = function(){
+	if (!search_data_loaded){
+	    console.log("waiting for search data to load");
+	    setTimeout(do_search, 100);
+	    return;
+	}
+	ret = $('.search-field').keyup();
+	console.log("search_started = ", search_started);
+	if (!search_started){
+	    setTimeout(do_search, 100);
+	}
+    }
+    do_search();
+    if (1){
+        // log query
+        try { Logger.log("site_search_jump", {'query': sterm});   }
+        catch (error){ console.log("error! ", error);  }
+    }
+}
+
+</script>
+</html>

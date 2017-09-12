@@ -1,0 +1,5 @@
+I am thinking we could ask them to design reversible circuits for the first problem set. (Using CNOT, Toffoli, NOT gates, design a circuit that
+
+if bit 1 is a 0, swaps bits 2 and 4.
+if bit 1 is a 1, swaps bits 3 and 4.
+

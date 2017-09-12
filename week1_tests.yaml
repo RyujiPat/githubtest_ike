@@ -1,0 +1,42 @@
+config: {}
+tests:
+- box_indexes:
+  - [0, 0]
+  - [0, 0]
+  - [0, 0]
+  expected: correct
+  name: (Universality of classical circuits) u1-1-cq-universality/test_1
+  responses: [choice_1, choice_3, choice_4]
+  url_name: u1-1-cq-universality
+- box_indexes:
+  - [0, 0]
+  expected: correct
+  name: (Faster-than-light communication with entanglement?) u1-1-cq-qm-flash/test_1
+  responses: [choice_4]
+  url_name: u1-1-cq-qm-flash
+- box_indexes:
+  - [0, 0]
+  - [0, 0]
+  - [0, 0]
+  expected: correct
+  name: (Mechanisms for fault-tolerance) problem_u1-1-cq-qm-flash/test_1
+  responses: [choice_1, choice_2, choice_4]
+  url_name: problem_u1-1-cq-qm-flash
+- box_indexes:
+  - [0, 0]
+  expected: [correct]
+  name: (Reversible two-four-three swap) u1_1_four_input_cswap/test_1
+  responses: ['']
+  url_name: u1_1_four_input_cswap
+- box_indexes:
+  - [0, 0]
+  expected: [correct]
+  name: (Controlled-controlled swap) u1_1_ccswap/test_1
+  responses: ['']
+  url_name: u1_1_ccswap
+- box_indexes:
+  - [0, 0]
+  expected: [correct]
+  name: (Reversible two-input demultiplexer) u1_1_demux2/test_1
+  responses: ['']
+  url_name: u1_1_demux2
