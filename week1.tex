@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% File:   week1.tex
+% Date:   06-Sep-2017
+% Author: I. Chuang <ichuang@mit.edu>
+%
+% 2017 8.370 week 1
+%
+
+%\documentclass{article}
+%\usepackage{graphicx}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+<<<<<<< HEAD
+
+%Ryuji added
+\usepackage{amsmath}
+\newcommand{\ket}[1]{|{#1}\rangle}
+\newcommand{\bra}[1]{\langle{#1}|}
+\newcommand{\braket}[2]{\langle{#1}|{#2}\rangle}
+\newcommand{\ketbra}[2]{|{#1}\rangle\!\langle{#2}|}
+=======
+>>>>>>> 565259703e508521afb2f85e65e306145e8ead1d
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% problem environment (for PS)
+
+\newenvironment{problem}{\begin{enumerate}%
+		\renewcommand{\makelabel}[1]{%
+  		    {\bf \TheType\refstepcounter{mycnt}\themycnt:~\hfill}%
+		    \ifthenelse{\equal{##1}{}}{}{%
+    		({\bf ##1})}%
+			}}%
+                        {\end{enumerate}}%
+
+\newcommand{\mattwoc}[4]{\left[
+    % \setlength{\arraycolsep}{4pt}%
+	\begin{array}{cc}{#1}&{#2}\\{#3}&{#4}\end{array}\right]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main Text
+
+\def\<{\langle}
+\def\>{\rangle}
+
+\begin{edXchapter}{Unit 1: Quantum and classical computing fundamentals}[url_name=unit1]
+
+\edXaskta{settings=1 to=rtakagi@mit.edu cc=ichuang@mit.edu}
+
+% \input{course_intro.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \input{week1_1_survey.tex}
+
+\input{week1_lectures1.tex}
+
+\input{week1_2_ps1a.tex}
+
+<<<<<<< HEAD
+\input{week1_3_ps1b.tex}
+
+=======
+>>>>>>> 565259703e508521afb2f85e65e306145e8ead1d
+% 
+% \input{week1_3_osr.tex}
+% 
+% \input{week1_4_denmat.tex}
+% 
+% \input{week1_lectures2.tex}
+% 
+% \input{week1_5_qec.tex}
+% 
+% \input{week1_6_ibm.tex}
+
+% \input{week1_6_research.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{edXchapter}

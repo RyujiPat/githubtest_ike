@@ -1,0 +1,231 @@
+<xbundle>
+  <metadata/>
+  <course number="8.370r" display_name="Quantum Info Science I" semester="2017_Fall" org="MITx">
+    <chapter display_name="Welcome to 8.370r" linenum="17" tex_filename="welcome.tex" refnum="1" url_name="welcome">
+      <sequential display_name="Introduction to 8.370r" linenum="4" tex_filename="./course_intro.tex" refnum="1" url_name="Introduction_to_8_370r">
+        <html display_name="About this course" linenum="6" tex_filename="./course_intro.tex" url_name="About_this_course">
+          <p>
+            <big class="xxlarge">About this course</big>
+          </p>
+          <p>
+            <b class="bf">
+              <big class="xlarge">Welcome to 8.370r Quantum Information Science I.</big>
+            </b>
+          </p>
+          <p>
+This course rovides an introduction to the theory and practice of quantum computation. We cover the physics of information processing; quantum logic; quantum algorithms including Shor's factoring algorithm and Grover's search algorithm; quantum error correction; quantum communication and cryptography. Prior knowledge of quantum mechanics helpful but not required. This is the first course in a sequence of two quantum information science courses at MIT. </p>
+          <p>
+You may find helpful the <a href="https://www.edx.org/course/mastering-quantum-mechanics-part-1-wave-mitx-8-05-1x" target="_blank">MIT 8.05x courses on edX</a>, and Berkeley's <a href="https://www.edx.org/course/quantum-mechanics-quantum-computation-uc-berkeleyx-cs-191x" target="_blank">CS191 course</a>. The <a href="https://www.edx.org/course/quantum-cryptography-caltechx-delftx-qucryptox" target="_blank">Caltech-TU Delft course on quantum cryptography</a> may also be insightful. </p>
+          <p>
+This course comprises four units, each with lectures and in-depth, automatically graded problems: </p>
+          <ul class="itemize">
+            <li>
+              <p><a href="/course/courseware/unit1" target="_blank">Unit 1: Quantum and classical computing fundamentals</a> &#x2013; an introduction to quantum computation; classical Boolean logic; introduction to quantum mechanics; and quantum wierdness. </p>
+            </li>
+            <li>
+              <p><a href="/course/courseware/unit2" target="_blank">Unit 2: Simple quantum protocols and algorithms</a> &#x2013; covering quantum teleportation, superdense coding, the quantum circuit model, the Deutsch-Jozsa quantum algorithm, Simon's algorithm, the quantum Fourier transform, phase estimation, and Shor's quantum factoring algorith. </p>
+            </li>
+            <li>
+              <p><a href="/course/courseware/unit3" target="_blank">Unit 3: Quantum noise, codes, and communication</a> &#x2013; illustrating classical error correction codes, quantum noise models, the nine-qubit quantum code, criteria for quantum codes, Calderbank-Shor-Steane codes, and quantum key distribution. </p>
+            </li>
+            <li>
+              <p><a href="/course/courseware/unit4" target="_blank">Unit 4: Models of quantum computation</a> &#x2013; describing the role of measurement in quantum algorithms, distributed quantum algorithms, noisy computation and fault-tolerance, quantum fault-tolerance, and adiabatic quantum computation. </p>
+            </li>
+          </ul>
+          <p>
+            <b class="bf">
+              <big class="xlarge">Assessments and Deadlines</big>
+            </b>
+          </p>
+          <p>
+There are eight problem sets - two for each unit. </p>
+          <p>
+            <b class="bf">
+              <big class="xlarge">Grading and Certificates</big>
+            </b>
+          </p>
+          <p>
+The course grade is 40% homework, 20% midterm exam, 30% final exam, and 10% participation. </p>
+          <p>
+            <b class="bf">
+              <big class="xlarge">Honor Code</big>
+            </b>
+          </p>
+          <p>
+As described in the <a href="https://www.edx.org/edx-terms-service" target="_blank">edX Honor code</a>, you are expected to: </p>
+          <ul class="itemize">
+            <li>
+              <p>
+Complete all tests and assignments on my own, unless collaboration on an assignment is explicitly permitted. </p>
+            </li>
+            <li>
+              <p>
+Maintain only one user account and not let anyone else use my username and/or password. </p>
+            </li>
+            <li>
+              <p>
+Not engage in any activity that would dishonestly improve my results, or improve or hurt the results of others. </p>
+            </li>
+            <li>
+              <p>
+Not post answers to problems that are being used to assess student performance. </p>
+            </li>
+          </ul>
+          <p>
+            <b class="bf">
+              <big class="xlarge">Textbook and References</big>
+            </b>
+          </p>
+          <p>
+You may find it helpful to refer to: <a href="https://www.amazon.com/Quantum-Computation-Information-10th-Anniversary/dp/1107002176" target="_blank">Quantum Computation and Quantum Information</a>, by Nielsen and Chuang. There are also excellent, freely available <a href="http://www.theory.caltech.edu/~preskill/ph219/index.html#lecture" target="_blank">lecture notes by John Preskill</a>, and superb <a href="http://pirsa.org/C15009" target="_blank">video lectures by Daniel Gottesman</a>. </p>
+        </html>
+      </sequential>
+      <sequential display_name="Search this course" linenum="36" tex_filename="welcome.tex" refnum="2" url_name="Search_this_course">
+        <vertical display_name="Search this course" refnum="1" url_name="vertical_Search_this_course">
+          <html display_name="Search this course" linenum="43" tex_filename="welcome.tex" url_name="html_Search_this_course">
+            <p>
+              <big class="xlarge">Search the 8.370r course content</big>
+            </p>
+            <p>
+This search covers videos, problems, and text content. </p>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+            <script type="text/javascript" src="/static/js_lunr.min.js"/>
+            <a href="/static/NONE" id="dummy_course_link" style="display:none"/>
+            <a href="/course/jump_to_id/NONE" id="dummy_jump_link" style="display:none"/>
+            <section class="search">
+              <!--<h1>Search</h1> -->
+              <input size="60" type="search" autofocus="" class="search-field">
+                <img src="/static/images_search_glass.png"/>
+              </input>
+              <div class="search-results"/>
+            </section>
+            <script type="text/javascript">
+
+  course_static_url = $('#dummy_course_link').attr('href').replace('/NONE', '');
+  jump_to_url = $('#dummy_jump_link').attr('href').replace('/NONE', '');
+
+  // searchIndexUrl = course_static_url + "/searchIndex.json";
+
+  searchIndexUrl = course_static_url + "/searchIndex.js";
+
+search_data_loaded = false;
+search_started = false;
+
+jQuery(function($) {
+    var index,
+        store,
+        data = $.getJSON(searchIndexUrl);
+
+    data.then(function(data){
+        store = data.store,
+        // create index
+        index = lunr.Index.load(data.index)
+	search_data_loaded = true;
+    });
+
+    var lb = String.fromCharCode(60);
+    var rb = String.fromCharCode(62);
+    var amp = String.fromCharCode(38);
+
+    var mke = function(x){ return lb + x + rb; }
+    var do_logger_handle;
+    var query_to_log;
+
+    var queue_query_log = function(query){
+	if (do_logger_handle){			// log only if quiet
+	    clearTimeout(do_logger_handle);
+	}
+	query_to_log = query;
+	do_logger_handle = setTimeout(do_query_log, 400);
+    }
+
+    var do_query_log = function(){
+        try { Logger.log("site_search", {'query': query_to_log});   }
+        catch (error){ console.log("error! ", error);  }
+    }
+
+    $('.search-field').keyup(function() {
+        var query = $(this).val();
+	// console.log('query = ', query);
+        if(query === ''){
+            jQuery('.search-results').empty();
+        }
+        else {
+            // perform search
+	    search_started = true;
+	    // log query
+	    queue_query_log(query)
+	    // do search
+            var results = index.search(query);
+	    $('.search-results').show();
+	    // $('.search-results').append("hello world");
+	    // console.log('results = ', results);
+            data.then(function(data) {
+            // (function() {
+		if (results.length){
+		    $('.search-results').show();
+		    $('.search-results').empty();
+		    var the_list  = $(mke('ul'));
+                    results.map(function(result){
+			var title = store[result.ref].title;
+			var sdat = store[result.ref];
+			// console.log("result ref=", result.ref, " title=", title);
+			var link = $(mke('a'))
+                                .attr('href', jump_to_url + '/' + result.ref)
+                                .text(sdat.title);
+                        var el = $(mke('li'))
+                                .append(link)
+			        .append(amp+"nbsp; ")
+			        .append($(lb+"font color='grey'"+rb+ result.score.toFixed(3) + lb + "/font" + rb))
+				.append(mke('br/'))
+				.append($(lb+"font color='orange' size='-1'"+rb+ sdat.path + lb + "/font" + rb)
+                            );
+                        // if(store[result.ref].abstract){
+                        //    el.after($(lb + 'p' + rb).text(store[result.ref].abstract));
+                        // }
+			// console.log("el = ", el);
+                        the_list.append(el);
+		    });
+                    $('.search-results').append(the_list)
+		}else{
+                    $('.search-results').empty().append($(mke('p') + 'No results found' + mke('/p')));
+                }
+            }); 
+            // })(); 
+        }
+    }); 
+
+});
+
+if (window.location.search){
+    var sterm = window.location.search.split('=')[1];
+    $('.search-field').val(sterm);
+
+    var do_search = function(){
+	if (!search_data_loaded){
+	    console.log("waiting for search data to load");
+	    setTimeout(do_search, 100);
+	    return;
+	}
+	ret = $('.search-field').keyup();
+	console.log("search_started = ", search_started);
+	if (!search_started){
+	    setTimeout(do_search, 100);
+	}
+    }
+    do_search();
+    if (1){
+        // log query
+        try { Logger.log("site_search_jump", {'query': sterm});   }
+        catch (error){ console.log("error! ", error);  }
+    }
+}
+
+</script>
+          </html>
+        </vertical>
+      </sequential>
+    </chapter>
+  </course>
+</xbundle>

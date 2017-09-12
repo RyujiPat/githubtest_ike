@@ -1,0 +1,307 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{edXsection}{PS#1 Part B - Quantum Mechanics}
+
+\begin{edXvertical}{Pauli matrices}
+
+\begin{edXproblem}{Eigenvalues, eigenstates}{attempts=20}
+
+Recall from the linear algebra class that any normal linear operator $A$ (normal linear operator satisfies $AA^{\dagger}=A^{\dagger}A$) allows for a spectral decomposition
+$A=\sum_i a_i \ketbra{i}{i}$ where $a_i$ is called eigenvalue and $\ket{i}$ is called eigenvector or eigenstate when $A$ is Hermitian. 
+
+The Pauli matrices with $Z$ basis are 
+\begin{equation}
+ I=
+ \begin{pmatrix}
+  1 & 0\\
+  0& 1 
+ \end{pmatrix}
+ ,
+  X=
+ \begin{pmatrix}
+  0 & 1\\
+  1& 0 
+ \end{pmatrix}
+ ,
+  Y=
+ \begin{pmatrix}
+  0 & -i\\
+  i& 0 
+ \end{pmatrix}
+ ,
+  Z=
+ \begin{pmatrix}
+  1 & 0\\
+  0& -1 
+ \end{pmatrix}
+\end{equation}
+
+Compute the sets of eigenvalue and eigenstate for each Pauli matrix. Note that each Pauli matrix has a positive eigenvalue and a negative eigenvalue. Express the eigenstates with $Z$ basis ($\{\ket{0},\ket{1}\}$) using the ket notation. 
+
+Type in \texttt{|0>} for $\ket{0}$ etc. and \texttt{sqrt(2)} for $\sqrt{2}$. For multiplication, do not forget to type \texttt{*}. For instance, you should type in \texttt{2*|0>} for $2\ket{0}$. You may use \texttt{i} for $i$.
+  
+% This is the line which pastes in the python code
+\edXincludepy{lib/sympy_check.py}
+
+$X$:
+\edXinline{positive eigenvalue =} \edXabox{expect="1" type="numerical"
+  tolerance='1\%' inline='1'},\ \edXinline{eigenstate =} \edXabox{expect="(|0>+|1>)/sqrt(2)" type="custom" cfn="sympy_check_quantum" inline='1' math="1"  preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}  
+
+\edXinline{negative eigenvalue =} \edXabox{expect="-1" type="numerical"
+  tolerance='1\%' inline='1' options=},\ \edXinline{eigenstate =} \edXabox{expect="(|0>-|1>)/sqrt(2)" type="custom" cfn="sympy_check_quantum" inline='1' math="1"  preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}  
+  
+$Y$:
+\edXinline{positive eigenvalue =} \edXabox{expect="1" type="numerical"
+  tolerance='1\%' inline='1' options=},\ \edXinline{eigenstate =} \edXabox{expect="(|0>+i*|1>)/sqrt(2)" type="custom" cfn="sympy_check_quantum" inline='1' math="1"  preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+\edXinline{negative eigenvalue =} \edXabox{expect="-1" type="numerical"
+  tolerance='1\%' inline='1' options=},\ \edXinline{eigenstate =} \edXabox{expect="(|0>-i*|1>)/sqrt(2)" type="custom" cfn="sympy_check_quantum" inline='1' math="1"  preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}  
+  
+$Z$:
+\edXinline{positive eigenvalue =} \edXabox{expect="1" type="numerical"
+  tolerance='1\%' inline='1' options=},\ \edXinline{eigenstate =} \edXabox{expect="|0>" type="custom" cfn="sympy_check_quantum" inline='1' math="1"  preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+\edXinline{negative eigenvalue =} \edXabox{expect="-1" type="numerical"
+  tolerance='1\%' inline='1' options=},\ \edXinline{eigenstate =} \edXabox{expect="|1>" type="custom" cfn="sympy_check_quantum" inline='1' math="1"  preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}  
+  
+  
+\begin{edXsolution}
+
+ All the Pauli matrices except $I$ have eigenvalues +1 and -1. Eigenvectors are in the row vector form,
+ \begin{equation}
+  X: \frac{1}{\sqrt{2}}(1,1) \mbox{ for eigenvalue +1}, \frac{1}{\sqrt{2}}(1,-1) \mbox{ for eigenvalue -1} 
+ \end{equation}
+ \begin{equation}
+  Y: \frac{1}{\sqrt{2}}(1,i) \mbox{ for eigenvalue +1}, \frac{1}{\sqrt{2}}(1,-i) \mbox{ for eigenvalue -1} 
+ \end{equation}
+ \begin{equation}
+  Z: (1,0) \mbox{ for eigenvalue +1}, (0,1) \mbox{ for eigenvalue -1} 
+ \end{equation}
+ Noting that $\ket{0}=(1,0)$ and $\ket{1}=(0,1)$ with $Z$ basis, the eigenstates in the ket notations are obtained.
+ 
+\end{edXsolution}  
+
+\edXaskta{}
+
+\end{edXproblem}
+
+
+\begin{edXproblem}{Basis changes}{attempts=10}
+ Consider the unitary matrix
+ \begin{equation}
+   H=\frac{1}{\sqrt{2}}
+ \begin{pmatrix}
+  1 & 1\\
+  1& -1 
+ \end{pmatrix}.
+ \end{equation}
+  This important unitary is called Hadamard gate, which frequently appears in quantum circuits. 
+  It is easy to check that the Hadamard gate converts $\ket{0}$ and $\ket{1}$ as
+ \begin{equation}
+  H\ket{0}=\frac{1}{\sqrt{2}}(\ket{0}+\ket{1}),\ \ H\ket{1}=\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}).
+ \end{equation} 
+We define $\ket{+}=\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$ and $\ket{-}=\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$.
+Express each Pauli matrix with $\{\ket{+},\ket{-}\}$ basis. Type in, for instance, \texttt{[[1,0],[0,1]]} for 
+$\begin{pmatrix}
+1 & 0\\
+0 & 1
+$.
+
+% This is the line which pastes in the python code
+\edXincludepy{lib/sympy_check.py}
+
+$X$:
+\edXabox{expect="[[1,0],[0,-1]]" type="custom" cfn="sympy_formula_check" inline='1' math="1" preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+$Y$:
+\edXabox{expect="[[0,i],[-i,0]]" type="custom" cfn="sympy_formula_check" inline='1' math="1" preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+$Z$:
+\edXabox{expect="[[0,1],[1,0]]" type="custom" cfn="sympy_formula_check" inline='1' math="1" preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}  
+
+\begin{edXsolution}
+
+ Using $\ket{+}=H\ket{0}$ and $\ket{-}=H\ket{1}$, 
+ \begin{equation}
+  \bra{+}X\ket{+}=\bra{0}HXH\ket{0}=\bra{0}Z\ket{0}=1,\ \bra{+}X\ket{-}=\bra{0}Z\ket{1}=0\\
+  \bra{-}X\ket{+}=\bra{1}Z\ket{0}=0,\ \bra{-}X\ket{-}=\bra{1}Z\ket{1}=-1\\ 
+ \end{equation}
+ For the other two, use $HYH=-Y$, $HZH=X$.
+\end{edXsolution}
+
+\end{edXproblem}
+
+\end{edXvertical}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{edXvertical}{Quantum gates}
+
+\begin{edXproblem}{Quantum gates}{attempts=10}
+
+Quantum gates are building blocks of quantum circuits that drive the evolution of quantum states. 
+The Hadamard gate was already introduced in the previous problem. We introduce another important gate called phase gate defined by 
+\begin{equation}
+ S=
+ \begin{pmatrix}
+  1 & 0 \\
+  0 & i 
+ \end{pmatrix}
+\end{equation}
+If we take the Hermitian conjugate, we obtain
+\begin{equation}
+ S^{\dagger}=
+ \begin{pmatrix}
+  1 & 0 \\
+  0 & -i 
+ \end{pmatrix}
+\end{equation}
+The phase gate does not do anything to $\ket{0}$ but adds the phase $i$ to $\ket{1}$.
+For instance, $S\ket{+}=\frac{1}{\sqrt{2}}(\ket{0}+i\ket{1})$.
+
+Quantum gates can be sequentially applied and the effective operation to the quantum state is obtained by multiplying the matrices describing the quantum gates in order. 
+For instance, if $X$ is applied first and $H$ follows it, the total operation is $HX$. 
+Compute the following. 
+
+% This is the line which pastes in the python code
+\edXincludepy{lib/sympy_check.py}
+
+\edXinline{$HX=$} \edXabox{expect="(1/sqrt(2))*[[1,1],[-1,1]]" type="custom" cfn="sympy_formula_check" inline='1' math="1" preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+\edXinline{$SH=$} \edXabox{expect="(1/sqrt(2))*[[1,1],[i,-i]]" type="custom" cfn="sympy_formula_check" inline='1' math="1" preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+\edXinline{$SXS^{\dagger}=$} \edXabox{expect="[[0,-i],[i,0]]" type="custom" cfn="sympy_formula_check" inline='1' math="1" preprocessorClassName="MathjaxPreprocessorForQM" preprocessorSrc="/static/mathjax_preprocessor_for_QM_H.js"}
+
+\end{edXproblem}
+
+\end{edXvertical}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{edXvertical}{Bloch sphere}
+
+\begin{edXproblem}{Positions on the Bloch sphere}{attempts=10}
+
+Any qubit state $\ket{\psi}$ can be expressed of the form
+\begin{equation}
+ \ket{\psi}=\cos\left(\frac{\theta}{2}\right)\ket{0}+e^{i\phi}\sin\left(\frac{\theta}{2}\right)\ket{1}
+\end{equation}
+up to global phases, and $(\theta, \phi)$ determines the position of the state on the Bloch sphere. Express the positions in terms of $(\theta, \phi)$ for the eigenstate corresponding to the ${\bf negative}$ eigenvalue of each non-identity Pauli matrix.
+If $\phi$ is undetermined (could take any value), take $\phi=0$. Type in, for instance, \texttt{[pi,pi]} for $(\pi,\pi)$.
+
+% This is the line which pastes in the python code
+\edXincludepy{lib/sympy_check.py}
+
+\edXinline{$X$:} \edXabox{type="custom" size=40 expect="[pi/2,pi]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+\edXinline{$Y$:} \edXabox{type="custom" size=40 expect="[pi/2,(3/2)*pi]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+\edXinline{$Z$:} \edXabox{type="custom" size=40 expect="[pi,0]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+\begin{edXsolution}
+
+ Eigenvectors corresponding to the negative eigenvalue are
+ \begin{equation}
+  X:\ \ \frac{1}{\sqrt{2}}(\ket{0}-\ket{1}),\ \ (\theta,\phi)=(\pi/2,\pi)\\
+  Y:\ \ \frac{1}{\sqrt{2}}(\ket{0}-i\ket{1}),\ \ (\theta,\phi)=(\pi/2,3\pi/2)\\
+  Z:\ \ \ket{1},\ \ (\theta,\phi)=(\pi,\mbox{undertmined})
+ \end{equation}
+ 
+\end{edXsolution}
+
+\end{edXproblem}
+
+\begin{edXproblem}{Single qubit rotation}{attempts=10}
+
+Any unitary matrix in $SU(2)$ can be written of the form
+\begin{equation}
+ U=e^{-i\frac{\theta}{2} \vec{n}\cdot \vec{\sigma}}=\cos\left(\frac{\theta}{2}\right)I - i\sin\left(\frac{\theta}{2}\right)\vec{n}\cdot \vec{\sigma}
+\end{equation}
+It is regarded as a rotational operation on the Bloch sphere where $\theta$ and $\vec{n}=(n_x,n_y,n_z)$ specify the rotation angle and the axis which which the rotation takes place. $\vec{n}$ is a unit vector satisfying $n_x^2+n_y^2+n_z^2=1$. Note that $\vec{n}\cdot \vec{\sigma}=n_x\sigma_x+n_y\sigma_y+n_z\sigma_z$. We take $n_x\geq 0$ and $0\leq \theta <2\pi$ without loss of generality.
+Find $\vec{n}$ and $\theta$ for the following unitary matrices. Type in, for instance, \texttt{[0,0,1]} for $(0,0,1)$. You may use \texttt{sqrt(2)} for $\sqrt{2}$.
+
+% This is the line which pastes in the python code
+\edXincludepy{lib/sympy_check.py}
+
+$X$: 
+\edXinline{$\vec{n}=$}\edXabox{type="custom" size=40 expect="[1,0,0]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+\edXinline{$\theta=$}\edXabox{type="custom" size=40 expect="pi" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+$H=\frac{1}{\sqrt{2}}
+\begin{pmatrix}
+ 1 & 1\\
+ 1 & -1
+\end{pmatrix}
+$: 
+\edXinline{$\vec{n}=$}\edXabox{type="custom" size=40 expect="[1/sqrt(2),0,1/sqrt(2)]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+\edXinline{$\theta=$}\edXabox{type="custom" size=40 expect="pi" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+$S=
+\begin{pmatrix}
+ 1 & 0\\
+ 0 & i
+\end{pmatrix}$: 
+\edXinline{$\vec{n}=$}\edXabox{type="custom" size=40 expect="[0,0,1]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+\edXinline{$\theta=$}\edXabox{type="custom" size=40 expect="pi/2" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+$SH$: 
+\edXinline{$\vec{n}=$}\edXabox{type="custom" size=40 expect="[1/sqrt(3),1/sqrt(3),1/sqrt(3)]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+\edXinline{$\theta=$}\edXabox{type="custom" size=40 expect="(4/3)*pi" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+\begin{edXsolution}
+ $U=e^{-i\frac{\theta}{2}\vec{n}\cdot \sigma}$ can be explicitly written as
+ \begin{equation}
+  U=\begin{pmatrix}
+   \cos(\theta/2)-i\sin(\theta/2)n_z & -i\sin(\theta/2)n_x-\sin(\theta/2)n_y\\
+   -i\sin(\theta/2)n_x+\sin(\theta/2)n_y & \cos(\theta/2)+i\sin(\theta/2)n_z 
+  \end{pmatrix}
+ \end{equation} 
+ 
+ We will see the first one closely. All the others can be obtained in similar ways. 
+ $X=\begin{pmatrix}
+   0 & 1\\
+   1 & 0
+  \end{pmatrix}
+  $\\
+ $n_z=0$ because the diagonal entries are zero. Equating the real part and imaginary part of $(1,2)$ entry and $(2,1)$ entry gives $n_x=1,n_y=0$, and $\theta=\pi$. $\vec{n}=(1,0,0)$ and $\theta=\pi$ gives $U=-iX$. Since the global phase does not play any role, we do not have to worry about $-i$ part. We say that $U$ is equivalent to $X$ up to global phases. 
+ 
+\end{edXsolution}
+
+\end{edXproblem}
+
+\begin{edXproblem}{Single qubit rotation}{attempts=10}
+
+What are the resulting positions when the following unitaries are applied to the state positioned $(\pi/2, 0)$? Answer in terms of $(\theta, \phi)$. Take $\phi=0$ when $\phi$ is not determined (could take any value).
+
+% This is the line which pastes in the python code
+\edXincludepy{lib/sympy_check.py}
+
+$X:$
+\edXabox{type="custom" size=40 expect="[pi/2,0]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+$S:$
+\edXabox{type="custom" size=40 expect="[pi/2,pi/2]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+$SH:$
+\edXabox{type="custom" size=40 expect="[0,0]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+$SHSH:$
+\edXabox{type="custom" size=40 expect="[pi/2,pi]" noanswer=1 cfn="sympy_formula_check" inline="1" math="1" options="tolerance='0.01' "}
+
+See how these gates rotate quantum states on the Bloch sphere and especially permute the eigenstates of Pauli matrices. 
+ 
+\begin{edXsolution}
+
+ The state corresponding to $(\pi/2,0)$ is $\ket{+}=\frac{1}{2}(\ket{0}+\ket{1})$.
+ Apply the unitaries to it and find $\theta$ and $\phi$ such that $U\ket{+}=\cos(\theta/2)+e^{i\phi}\sin(\theta/2)$. 
+ 
+\end{edXsolution} 
+ 
+\end{edXproblem}
+
+\end{edXvertical}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{edXsection}

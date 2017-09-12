@@ -1,0 +1,62 @@
+<span>
+<div id="mitx_signup"></div>
+
+<script type="text/javascript">
+
+signup = (function(){
+    var the_data = "";
+
+    var setup_submit = function(){
+	console.log('calling schedule_setup');
+	if (window['make_signup']==undefined){
+	    setTimeout(setup_submit, 500);
+	    console.log('make_signup not yet defined, waiting 500ms');
+	}else{
+	    schedule_setup();
+	}
+    }
+
+    var update = function(data){
+	$( "#mitx_signup" ).html( data );
+	the_data = data;
+	console.log('done');
+	// console.log(data);
+	console.log('calling setup_submit');
+	setup_submit();
+    }
+
+    var err_msg = function(data){
+	console.log('ajax done');
+	// $( "#mitx_signup" ).html( "Failed to connect to scheduling server" );
+	$( "#mitx_signup" ).html( data.responseText );
+	console.log(data);
+	console.log('calling setup_submit');
+	setup_submit();
+    }
+
+    var get_uname = function(){
+	var uname = $.trim($('ol.user').find('a.user-link').contents()[4].data);
+	console.log('uname = ' + uname);
+	return uname;
+    }
+
+    return { 'load': function(){
+                       $.ajax( { type: "POST",
+		                 url: "https://mitx-scheduler-2014-07-19.appspot.com/reserve", 
+				 data: { uname: get_uname() },
+				 dataType: "html",
+				 success: update,
+				 error: err_msg,
+				}
+			    );
+	             },
+	     'the_data': the_data,
+	     'get': function(expr){ return eval(expr); },
+	   }
+})();
+
+signup.load();
+
+</script>
+
+</span>

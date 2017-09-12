@@ -1,0 +1,126 @@
+<span>
+<a href="/static/NONE" id="dummy_course_static_link" style="display:none"/>
+<a href="/course/jump_to_id/NONE" id="dummy_jump_link" style="display:none"/>
+<script type="text/javascript">
+
+(function(){
+    course_static_url = $('#dummy_course_static_link').attr('href').replace('/NONE', '');
+    jump_to_url = $('#dummy_jump_link').attr('href').replace('/NONE', '');
+
+    if (typeof String.prototype.startsWith != 'function') {
+	// see below for better implementation!
+	String.prototype.startsWith = function (str){
+	    return this.indexOf(str) === 0;
+	};
+    }
+
+    if(typeof(String.prototype.trim) === "undefined")
+    {
+	String.prototype.trim = function() 
+	{
+            return String(this).replace(/^\s+|\s+$/g, '');
+	};
+    }
+
+    var lb = String.fromCharCode(60);
+    var rb = String.fromCharCode(62);
+    var amp = String.fromCharCode(38);
+    var rlb = rb + lb;
+
+    var mke = function(x){ return lb + x + rb; }
+
+    go_to_search = function(){
+
+	// find search this module link
+	search_module_url = "";
+	$('div.course-index').find('nav').find('a').each(function(){
+	    if ($(this).text().trim().startsWith("Search this course")){
+		search_module_url = $(this).attr('href');
+		console.log("search_module_url = ", search_module_url);
+	    }
+	});
+
+	var sterm = $('#site-search-box').val();
+	// new_url = jump_to_url + "/Search_this_module/?q=" + sterm;
+	new_url = search_module_url + "?q=" + sterm;
+	console.log("sterm = ", sterm, " ; going to ", new_url);
+	window.location.href = new_url;
+    }
+
+    if (!$('#site-search-box').length){
+	$("nav.courseware").find("ol").append(lb + "section style='float:right'" + rlb + "input size='20'" 
+					      + " id='site-search-box'"
+					      + rlb + "img src='" + course_static_url
+					      + "/images_search_glass.png'/" + rlb + "/input" + rlb + "/section" + rb);
+    }
+
+    $("#site-search-box").keypress(function(event) {
+	if (event.which == 13) {
+            event.preventDefault();
+            go_to_search();
+	}
+    });
+
+    // $('#site-search-box').bind("enterKey", go_to_search);
+})();
+
+var add_fix_transcript = function(){
+    if ($('div.wrap-instructor-info').length==0){
+        return;
+    }
+    $('div.xblock-student_view-video').each(function(key, vblock_e){
+        var vblock = $(vblock_e);
+        var vuid = vblock.data('usage-id').split('@');
+        var vid;
+        if (vuid.length==1){
+            vuid = vblock.data('usage-id').split(';_')
+            vid = vuid[5];
+        }else{
+            vid = vuid[2];
+        }
+        var mfnpre = vid.split("_video",1)[0];
+	var mfnid = mfnpre;	// no periods
+	mfnpre = mfnpre.replace('8_371', '8.371');	// periods in gh filename
+        var lb = String.fromCharCode(60);
+        var rb = String.fromCharCode(62);
+        var mke = function(x){ return lb + x + rb; }
+        var ftid = "fix_transcript_" + mfnid;
+        if (!$('#' + ftid).length){
+            var html = lb + "span id='" + ftid + "' style='float:right'" + rb + lb + "a href='#'" + rb;
+            html += "contribute transcript fix" + mke("/a") + mke("/span");
+            console.log("html = ", html);
+            vblock.after(html)
+        }
+        $('#' + ftid).click(function(){
+            var cst = $('ol.subtitles').find('li.current');
+            var cindex = Number(cst.data('index'));
+	    var gurl;
+	    if (mfnpre.endsWith('_cq_sol')){
+		gurl = "https://github.com/mitocw/content-mit-8371x-cq-sol-subtitles/blob/master/";
+	    }else{
+		gurl = "https://github.com/mitocw/content-mit-8371x-subtitles/blob/master/";
+	    }
+            gurl += mfnpre + ".txt#L" + String(cindex + 10 + 1);
+            console.log("going to ", gurl);
+            window.open(gurl, "MITx 8.421x subtitle source");
+        });
+    });
+}
+try{
+    add_fix_transcript();
+}
+catch(err){
+    console.log(err);
+}
+
+try{
+    var rb = String.fromCharCode(62);
+    setTimeout(function(){ $('.math' + rb + 'span').css("border-left-color","transparent"); }, 3000);
+    setTimeout(function(){ $('.math' + rb + 'span').css("border-left-color","transparent"); }, 8000);
+}
+catch(err){
+    console.log(err);
+}
+
+</script>
+</span>
