@@ -1,0 +1,41 @@
+Unit 1: Quantum and classical computing fundamentals
+
+9/7   - Introduction to quantum computation
+9/12  - Classical logic
+9/14  - Intro to QM - states
+9/19  - Intro to QM - time evolution
+9/21  - Intro to QM - measurement and tensor products
+9/26  - Quantum weirdness
+
+Unit 2: Simple quantum protocols and algorithms
+
+9/28  - Teleportation and superdense coding
+10/3  - Quantum Circuit Model and Deutsch-Jozsa
+10/5  - Simons algorithm
+10/10 - no class (Columbus day)
+10/12 - Quantum Fourier Transform
+10/17 - Phase estimation
+10/19 - Shor's algorithm
+
+10/24 - Midterm exam
+
+Unit 3: Quantum noise, codes and communication
+
+10/26 - Classical error correcting codes
+10/31 - Quantum noise models
+11/2  - Nine-qubit quantum code
+11/7  - Criterion for quantum codes
+11/9  - Quantum CSS codes I
+11/14 - Quantum CSS codes II
+11/16 - Quantum key distribution
+
+Unit 4: Models of quantum computation
+
+11/21 - Measurement and quantum algorithms
+11/23 - no class (Thanksgiving)
+11/28 - Distributed quantum algorithms I
+11/28 - Distributed quantum algorithms II
+11/30 - Noise, computation, and fault-tolerance
+12/5  - Quantum fault-tolerance
+12/7  - Adiabatic quantum computing I
+12/12 - Adiabatic quantum computing II

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "reloading vagrant box"
+ssh vagrant@192.168.33.10 ./DO_RELOAD -8370r
+

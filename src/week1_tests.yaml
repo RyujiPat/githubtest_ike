@@ -1,0 +1,101 @@
+config: {}
+tests:
+- box_indexes:
+  - [0, 0]
+  - [0, 0]
+  - [0, 0]
+  expected: correct
+  name: (Universality of classical circuits) u1-1-cq-universality/test_1
+  responses: [choice_1, choice_3, choice_4]
+  url_name: u1-1-cq-universality
+- box_indexes:
+  - [0, 0]
+  expected: correct
+  name: (Faster-than-light communication with entanglement?) u1-1-cq-qm-flash/test_1
+  responses: [choice_4]
+  url_name: u1-1-cq-qm-flash
+- box_indexes:
+  - [0, 0]
+  - [0, 0]
+  - [0, 0]
+  expected: correct
+  name: (Mechanisms for fault-tolerance) problem_u1-1-cq-qm-flash/test_1
+  responses: [choice_1, choice_2, choice_4]
+  url_name: problem_u1-1-cq-qm-flash
+- box_indexes:
+  - [0, 0]
+  expected: [correct]
+  name: (Reversible two-four-three swap) u1_1_four_input_cswap/test_1
+  responses: ['']
+  url_name: u1_1_four_input_cswap
+- box_indexes:
+  - [0, 0]
+  expected: [correct]
+  name: (Controlled-controlled swap) u1_1_ccswap/test_1
+  responses: ['']
+  url_name: u1_1_ccswap
+- box_indexes:
+  - [0, 0]
+  expected: [correct]
+  name: (Reversible two-input demultiplexer) u1_1_demux2/test_1
+  responses: ['']
+  url_name: u1_1_demux2
+- box_indexes:
+  - [0, 0]
+  - [1, 0]
+  - [2, 0]
+  - [3, 0]
+  - [4, 0]
+  - [5, 0]
+  expected: [correct, correct, correct, correct, correct, correct]
+  name: (Eigenvalues, eigenstates) Eigenvalues__eigenstates/test_1
+  responses: [(|0>+|1>)/sqrt(2), (|0>-|1>)/sqrt(2), (|0>+i*|1>)/sqrt(2), (|0>-i*|1>)/sqrt(2),
+    '|0>', '|1>']
+  url_name: Eigenvalues__eigenstates
+- box_indexes:
+  - [0, 0]
+  - [1, 0]
+  - [2, 0]
+  expected: [correct, correct, correct]
+  name: (Basis changes) Basis_changes/test_1
+  responses: ['[[1,0],[0,-1]]', '[[0,i],[-i,0]]', '[[0,1],[1,0]]']
+  url_name: Basis_changes
+- box_indexes:
+  - [0, 0]
+  - [1, 0]
+  - [2, 0]
+  expected: [correct, correct, correct]
+  name: (Quantum gates) problem_Quantum_gates/test_1
+  responses: ['(1/sqrt(2))*[[1,1],[-1,1]]', '(1/sqrt(2))*[[1,1],[i,-i]]', '[[0,-i],[i,0]]']
+  url_name: problem_Quantum_gates
+- box_indexes:
+  - [0, 0]
+  - [1, 0]
+  - [2, 0]
+  expected: [correct, correct, correct]
+  name: (Positions on the Bloch sphere) Positions_on_the_Bloch_sphere/test_1
+  responses: ['[pi/2,pi]', '[pi/2,(3/2)*pi]', '[pi,0]']
+  url_name: Positions_on_the_Bloch_sphere
+- box_indexes:
+  - [0, 0]
+  - [1, 0]
+  - [2, 0]
+  - [3, 0]
+  - [4, 0]
+  - [5, 0]
+  - [6, 0]
+  - [7, 0]
+  expected: [correct, correct, correct, correct, correct, correct, correct, correct]
+  name: (Single qubit rotation) Single_qubit_rotation/test_1
+  responses: ['[1,0,0]', pi, '[1/sqrt(2),0,1/sqrt(2)]', pi, '[0,0,1]', pi/2, '[1/sqrt(3),1/sqrt(3),1/sqrt(3)]',
+    (4/3)*pi]
+  url_name: Single_qubit_rotation
+- box_indexes:
+  - [0, 0]
+  - [1, 0]
+  - [2, 0]
+  - [3, 0]
+  expected: [correct, correct, correct, correct]
+  name: (Single qubit rotation) problem_Single_qubit_rotation/test_1
+  responses: ['[pi/2,0]', '[pi/2,pi/2]', '[0,0]', '[pi/2,pi]']
+  url_name: problem_Single_qubit_rotation
